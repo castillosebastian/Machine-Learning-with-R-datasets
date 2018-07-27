@@ -24,3 +24,33 @@ insurance$bmi30 <- if_else(insurance$bmi >= 30, 1, 0)
 ins_model2 <- lm(charges ~ age + age2 + children + bmi + sex +
                    bmi30*smoker + region, data = insurance) 
 summary(ins_model2)
+
+# Laboratorio de Regresion Lineal
+library(MASS)
+install.packages("ISLR")
+library(ISLR)
+library(dplyr)
+library(ggplot2)
+str(Boston)
+df <- Boston
+lmfit <- lm(medv~lstat, df)
+summary(lmfit)
+names(lmfit)
+# Confidence Interval para concluir sobre la fuerza de la asociaciòn entre nuestro predictor 
+# y variable dependiente, entendiendo por fuerza de la asociaciòn a valores alejados de 0
+confint(lmfit)
+
+# Visualizacion de Resultados del medelo
+par(mfrow=c(2,2))
+plot(lmfit)
+
+# Probando si la relacion es lineal o no. Como se ve se aleja de la linealidad
+plot(predict(lmfit), residuals(lmfit))
+
+
+# Visualizacion del ggplot2
+df %>% 
+  mutate(modelo = predict(lmfit)) %>% 
+  ggplot() +
+  geom_point(aes(lstat, medv)) +
+  geom_line(aes(lstat, modelo)) 
