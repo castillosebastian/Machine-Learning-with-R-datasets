@@ -1,6 +1,7 @@
 library(dplyr)
 library(stringr)
 library(psych)
+
 setwd("~/R/Machine_learning_datasets")
 insurance <- read.csv("insurance.csv", stringsAsFactors = TRUE)
 str(insurance)
@@ -54,3 +55,20 @@ df %>%
   ggplot() +
   geom_point(aes(lstat, medv)) +
   geom_line(aes(lstat, modelo)) 
+
+# Regresión Multiple
+lmfitm <- lm(medv~., data = df)
+summary(lmfitm)
+
+# Interaccion
+str(Credit)
+lmfit <- lm(Balance ~ Income*Student, data=Credit)
+summary(lmfit)
+
+# Relaciones no lineales
+Advertising <- Advertising[, 2:5]
+str(Advertising)
+lmfit <- lm(sales ~ TV*radio, data=Advertising)
+summary(lmfit)
+lmfit$coefficients
+28.9+1.1*250
